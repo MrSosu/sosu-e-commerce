@@ -1,0 +1,14 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+name:
+  value: sosu
+
+spring:
+  cloud:
+    config:
+      override-system-properties: false

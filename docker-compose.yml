@@ -1,0 +1,68 @@
+services:
+  postgresql:
+    container_name: sosu_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: sosu
+      POSTGRES_PASSWORD: mypassword
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: sosu_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-mypassword}
+      PGCONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - my_network
+    restart: unless-stopped
+
+
+  mongodb:
+    container_name: sosu_mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sosu
+      MONGO_INITDB_ROOT_PASSWORD: mypassword
+    networks:
+      - my_network
+
+  mongo-express:
+    container_name: sosu_mongo_express
+    image: mongo-express:latest
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: sosu
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mypassword
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: sosu
+      ME_CONFIG_BASICAUTH_PASSWORD: mypassword
+    networks:
+      - my_network
+
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  postgres:
+  mongo:
+  pgadmin:
