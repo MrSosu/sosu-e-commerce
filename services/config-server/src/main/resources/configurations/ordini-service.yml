@@ -1,0 +1,20 @@
+server:
+  port: 8052
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ordini
+    username: sosu
+    password: mypassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+application:
+  config:
+    utenti-url: http://localhost:8051/api/v1/utenti
+    prodotti-url: http://localhost:8050/api/v1/prodotti

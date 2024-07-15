@@ -10,6 +10,7 @@
         <module name="prodotti" />
         <module name="config-server" />
         <module name="utenti" />
+        <module name="ordini" />
         <module name="discovery" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
       <module name="discovery" options="-parameters" />
+      <module name="ordini" options="-parameters" />
       <module name="prodotti" options="-parameters" />
       <module name="utenti" options="-parameters" />
     </option>
