@@ -1,9 +1,9 @@
 package com.example.prodotti.controllers;
 
-import com.example.prodotti.entities.ProdottoPurchaseRequest;
-import com.example.prodotti.entities.ProdottoPurchaseResponse;
-import com.example.prodotti.entities.ProdottoRequest;
-import com.example.prodotti.entities.ProdottoResponse;
+import com.example.prodotti.dto.ProdottoPurchaseRequest;
+import com.example.prodotti.dto.ProdottoPurchaseResponse;
+import com.example.prodotti.dto.ProdottoRequest;
+import com.example.prodotti.dto.ProdottoResponse;
 import com.example.prodotti.handler.GenericResponse;
 import com.example.prodotti.services.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;

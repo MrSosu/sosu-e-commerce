@@ -1,4 +1,4 @@
-package com.example.prodotti.entities;
+package com.example.prodotti.dto;
 
 import lombok.*;
 
@@ -7,10 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class ProdottoPurchaseResponse {
+public class ProdottoPurchaseRequest {
 
     private Long id_prodotto;
-    private String nome;
     private Integer quantita;
 
 }

@@ -2,12 +2,10 @@ package com.example.prodotti.services;
 
 import com.example.prodotti.entities.Categoria;
 import com.example.prodotti.entities.Prodotto;
-import com.example.prodotti.entities.ProdottoRequest;
-import com.example.prodotti.entities.ProdottoResponse;
+import com.example.prodotti.dto.ProdottoRequest;
+import com.example.prodotti.dto.ProdottoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class ProdottoMapper {

@@ -1,5 +1,9 @@
 package com.example.prodotti.services;
 
+import com.example.prodotti.dto.ProdottoPurchaseRequest;
+import com.example.prodotti.dto.ProdottoPurchaseResponse;
+import com.example.prodotti.dto.ProdottoRequest;
+import com.example.prodotti.dto.ProdottoResponse;
 import com.example.prodotti.entities.*;
 import com.example.prodotti.exceptions.InputErratoException;
 import com.example.prodotti.exceptions.ProdottoNotFoundException;
