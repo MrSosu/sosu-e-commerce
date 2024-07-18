@@ -2,6 +2,13 @@ server:
   port: 8052
 
 spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.example.ordini.kafka.OrderConfirmation
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/ordini
