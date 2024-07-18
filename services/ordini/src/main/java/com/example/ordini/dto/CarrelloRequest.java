@@ -1,6 +1,9 @@
 package com.example.ordini.dto;
 
+import com.example.ordini.prodotti.PurchaseRequest;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,5 +13,7 @@ import lombok.*;
 public class CarrelloRequest {
 
     private Long idUtente;
+    private Double totalAmount;
+    private List<PurchaseRequest> purchaseRequests;
 
 }
