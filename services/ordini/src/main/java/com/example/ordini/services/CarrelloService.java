@@ -6,6 +6,8 @@ import com.example.ordini.entities.Carrello;
 import com.example.ordini.entities.Ordine;
 import com.example.ordini.exception.BusinessException;
 import com.example.ordini.exception.CarrelloNotFoundException;
+import com.example.ordini.kafka.OrderConfirmation;
+import com.example.ordini.kafka.OrderProducer;
 import com.example.ordini.prodotto.ProdottoClient;
 import com.example.ordini.prodotto.ProdottoPurchaseRequest;
 import com.example.ordini.repositories.CarrelloRepository;
@@ -30,6 +32,8 @@ public class CarrelloService {
     private UtenteClient utenteClient;
     @Autowired
     private ProdottoClient prodottoClient;
+    @Autowired
+    private OrderProducer orderProducer;
 
     public CarrelloResponse getCarrelloById(Long id) {
         Optional<Carrello> optionalCarrello = carrelloRepository.findById(id);
@@ -68,9 +72,14 @@ public class CarrelloService {
         // processare il servizio di pagamento
 
         // inviare l'order confirmation ---> tramite KAFKAAAAAAAAAAA
-
-
-        return null;
+        orderProducer.sendConfermaOrdine(
+                OrderConfirmation.builder()
+                        .idOrdine(carrello.getId())
+                        .idUtente(carrello.getIdUtente())
+                        .totalAmount(carrello.getTotalAmount())
+                        .prodotti(request.getProdottoPurchaseRequests())
+                        .build());
+        return carrelloMapper.responseFromCarrello(carrello);
     }
 
 

@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="prodotti" />
         <module name="config-server" />
+        <module name="payment" />
         <module name="utenti" />
         <module name="ordini" />
         <module name="discovery" />
@@ -20,6 +21,7 @@
       <module name="config-server" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="ordini" options="-parameters" />
+      <module name="payment" options="-parameters" />
       <module name="prodotti" options="-parameters" />
       <module name="utenti" options="-parameters" />
     </option>
