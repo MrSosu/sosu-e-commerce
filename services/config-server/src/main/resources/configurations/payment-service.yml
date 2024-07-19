@@ -1,14 +1,10 @@
 server:
-  port: 8070
+  port: 8052
 
 spring:
-  application:
-    name: ordini-service
-  config:
-    import: optional:configserver:http://localhost:8888
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ordini
+    url: jdbc:postgresql://localhost:5432/pagamenti
     username: sosu
     password: mypassword
   jpa:
@@ -23,10 +19,4 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: orderConfirmation:com.example.ordini.kafka.OrderConfirmation
-
-application:
-  config:
-    prodotti-url: http://localhost:8050/api/v1/prodotti
-    utenti-url: http://localhost:8051/api/v1/utenti
-    payment-url: http://localhost:8052/api/v1/payment
+        spring.json.type.mapping: paymentConfirmation:com.example.payment.kafka.PaymentNotificationRequest
