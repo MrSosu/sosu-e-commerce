@@ -3,12 +3,18 @@ package com.example.ordini.services;
 import com.example.ordini.dto.CarrelloRequest;
 import com.example.ordini.dto.CarrelloResponse;
 import com.example.ordini.entities.Carrello;
+import com.example.ordini.entities.Ordine;
+import com.example.ordini.exception.BusinessException;
 import com.example.ordini.exception.CarrelloNotFoundException;
+import com.example.ordini.prodotto.ProdottoClient;
+import com.example.ordini.prodotto.ProdottoPurchaseRequest;
 import com.example.ordini.repositories.CarrelloRepository;
+import com.example.ordini.utente.UtenteClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +24,12 @@ public class CarrelloService {
     private CarrelloRepository carrelloRepository;
     @Autowired
     private CarrelloMapper carrelloMapper;
+    @Autowired
+    private OrdineService ordineService;
+    @Autowired
+    private UtenteClient utenteClient;
+    @Autowired
+    private ProdottoClient prodottoClient;
 
     public CarrelloResponse getCarrelloById(Long id) {
         Optional<Carrello> optionalCarrello = carrelloRepository.findById(id);
@@ -33,13 +45,32 @@ public class CarrelloService {
         return optionalCarrello.get();    }
 
     public CarrelloResponse createCarrello(CarrelloRequest request) {
-        Carrello carrello = Carrello.builder()
-                .idUtente(request.getIdUtente())
-                .totalAmount(0.0)
-                .ordineList(new ArrayList<>())
-                .build();
+        // check se esiste l'utente
+        var utente = utenteClient.findUtenteById(request.getIdUtente());
+        if (utente.isEmpty())
+            throw new BusinessException("L'utente con id " + request.getIdUtente() + " non esiste! Ordine impossibile da effettuare");
+        // acquisto dei prodotti
+        prodottoClient.purchaseProdotti(request.getProdottoPurchaseRequests());
+        // salvo il carrello nel database
+        Carrello carrello = carrelloRepository.save(carrelloMapper.carrelloFromRequest(request));
+        // salvo i singoli ordini
+        List<Ordine> ordineList = new ArrayList<>();
+        for (ProdottoPurchaseRequest pRequest : request.getProdottoPurchaseRequests()) {
+            Ordine ordine = ordineService.saveOrdine(Ordine.builder()
+                    .carrello(carrello)
+                    .idProdotto(pRequest.getIdProdotto())
+                    .quantita(pRequest.getQuantita())
+                    .build());
+            ordineList.add(ordine);
+        }
+        carrello.setOrdineList(ordineList);
         carrelloRepository.save(carrello);
-        return carrelloMapper.responseFromCarrello(carrello);
+        // processare il servizio di pagamento
+
+        // inviare l'order confirmation ---> tramite KAFKAAAAAAAAAAA
+
+
+        return null;
     }
 
 
